@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% load static %}
+<script src="{% static 'javascript/replay.js' %}"></script>
+
+<div class="col s12 m6 l4">
+    <center>
+        <H1 id="title"><strong>{{camera.title}} Recordings</strong></H1>
+        <br>
+        Week:
+        <ul class="pagination">
+            <li class="disabled "><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+
+            {% with ''|center:page_amount as range %}
+            {% for i in range %}
+                {% if current_page == forloop.counter %}
+                    <li class="active orange"><a href="/camera/replay/{{forloop.counter}}">{{ forloop.counter }}</a></li>
+                {% else %}
+                    <li class="waves-effect"><a href="/camera/replay/{{forloop.counter}}">{{ forloop.counter }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% endwith %}
+            <li class="disabled"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </center>
+    <div class="card hoverable grey darken-2">
+            <div class="card-tabs">
+                  <ul class="tabs tabs-fixed-width grey darken-2 ">
+                        {% for date in dates|slice:begin_end %}
+                        <li class="tab hoverable"><a class="orange-text" href="#">{{date}}</a></li>
+                        {% endfor %}
+                  </ul>
+            </div>
+
+            {% for date in dates|slice:begin_end %}
+            <div class="card-content grey lighten-2" style="display: none">
+                 <center><h6>{{date}}</h6></center>
+                {% if date.videos %}
+                    {% for video in date.videos %}
+                        {% if date.date in video.path %}
+                        <ul class="collapsible hoverable" style="display: none">
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons">videocam</i>
+                                    {{video.title}}
+                                    <span class="badge">{{video.title}}</span></div>
+                                <div class="collapsible-body">
+                                    <a href="{{MEDIA_URL}}{{camera.path}}/{{video.path}}">{{video.path}}</a>
+                                </div>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <center><h6>No recordings on {{date}}</h6></center>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="card-content grey lighten-2">
+                <center>
+                    <span id="show_more" class="waves-effect waves-light btn-large orange">load more</span>
+                    <br>
+                    <span id="show_all" class="waves-effect waves-light btn-small orange">load all</span>
+                </center>
+            </div>
+    </div>
+</div>
+
+{% endblock %}

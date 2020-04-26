@@ -1,0 +1,43 @@
+<nav class="nav-extended">
+    <div class="nav-wrapper grey darken-3">
+        <a href="/" class="brand-logo orange-text center"><strong>Replay Cameras</strong></a>
+
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% for camera in cameras %}
+                <li><a href="/cameras/{{camera.title}}" class="orange-text" >{{camera.title}}</a></li>
+            {% endfor %}
+            {% if user.is_authenticated %}
+            <li><a href="/logout/" class="orange-text">Logout</a></li>
+            {% endif %}
+        </ul>
+
+    </div>
+ </nav>
+
+<ul class="sidenav grey darken-2" id="mobile-demo">
+
+    <li><a href="/" class="brand-logo orange-text center"><H1><b>Replay Cameras</b></H1></a></li>
+    {% for camera in cameras %}
+        <li><a href="/cameras/{{camera.title}}" class="orange-text"><h2><u>{{camera.title}}</u></h2></a></li>
+    {% endfor %}
+    {% if user.is_authenticated %}
+    <li><a href="/logout/" class="orange-text"><H2><u>Logout</u></H2></a></li>
+    {% endif %}
+</ul>
+
+
+
+<script>
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+    $('.collapsible').collapsible();
+    $('.dropdown-trigger').dropdown({ hover: true });
+});
+
+</script>
+
+
+

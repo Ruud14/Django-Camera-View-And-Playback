@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+{% load static %}
+<script src="{% static 'javascript/homepage.js' %}"></script>
+
+<center>
+    <H1><strong>Welcome {{user.username}}</strong></H1>
+    <br><br><br>
+</center>
+
+<div class="col s12 m6 l4">
+    <center><h5>Recent camera recordings.</h5></center>
+    <div class="card hoverable grey darken-2">
+            <div class="card-tabs">
+                  <ul class="tabs tabs-fixed-width grey darken-2 ">
+                      <li class="tab hoverable"><a class="orange-text" href="#">Replay</a></li>
+                      <li class="tab hoverable"><a class="orange-text" href="#">Cameras</a></li>
+                  </ul>
+            </div>
+
+            <div class="card-content grey lighten-2">
+                {% for recording in recordings %}
+                    <ul class="collapsible hoverable">
+                        <li>
+                            <div  class="collapsible-header">
+                                <i class="material-icons">videocam</i>
+                                {{recording.title}}
+                            </div>
+                            <div class="collapsible-body">
+                                <a href="{{MEDIA_URL}}/{{recording.path}}">{{recording.path}}</a>
+                            </div>
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+            <div class="card-content grey lighten-2" style="display: none">
+                {% for camera in cameras %}
+                <ul class="collapsible hoverable">
+                    <li>
+                        <script>
+                            function redir() {
+                               window.location.href = "/cameras/{{camera.title}}";
+                            }
+                        </script>
+                        <div id ="camera_card" onclick="redir()" class="collapsible-header">
+                            <i class="material-icons">videocam</i>
+                            {{ camera.title }}
+                        </div>
+                        <div class="collapsible-body">
+                        </div>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<center>
+    <H1><strong>{{camera.title}}</strong></H1>
+    <iframe id="CameraIframe" src="{{camera.url}}" width="1285" height="725"></iframe>
+</center>
+
+<center>
+    <br><br><br><br>
+    <a href="/cameras/{{camera.title}}/replay/" class="waves-effect waves-light btn-large orange">Replay</a>
+</center>
+
+{% endblock %}
