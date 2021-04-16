@@ -34,6 +34,13 @@ def get_recordings():
                             new_video = Video(os.path.join(camera_folder, dir_or_file, possible_file),
                                               date_folder_path.split("/")[-1].split("\\")[-1]+" "+possible_file.replace("-",":"))
                             videos.append(new_video)
+                if os.path.isfile(date_folder_path):
+                    filepath = date_folder_path
+                    if str(filepath).endswith("MJPEG.mp4"):
+                            continue
+                    new_video = Video(os.path.join(camera_folder, dir_or_file),
+                                        filepath.split("/")[-1].split("\\")[-1])
+                    videos.append(new_video)
 
     videos.sort(key=lambda x: x.title, reverse=True)
 
